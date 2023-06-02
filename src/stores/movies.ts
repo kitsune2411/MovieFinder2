@@ -1,12 +1,6 @@
 import { defineStore } from 'pinia'
 import { getTopMovies } from '@/api/movie'
-
-interface movies {
-  id: string
-  title: string
-  description?: string
-  image: string
-}
+import { type movies } from '@/types'
 
 export const useMoviesStore = defineStore('movies', {
   state: () => ({
@@ -17,7 +11,8 @@ export const useMoviesStore = defineStore('movies', {
     async getTopMoviesList() {
       try {
         const TopMovies = await getTopMovies()
-        if (TopMovies.status !== 200) throw TopMovies
+        const isError = TopMovies.status !== 200 && TopMovies.data.errorMessage !== ''
+        if (isError) throw TopMovies
         this.moviesList = TopMovies.data.items
       } catch (error) {
         console.error(error)
