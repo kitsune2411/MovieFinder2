@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 const links = [
-    'Home',
-    'Movie',
-    'Genre',
-    'About',
-    'Help',
+    { name: 'Home', page: 'home' },
+    { name: 'Movie', page: 'movie' },
+    { name: 'Genre', page: '' },
+    { name: 'About', page: 'about' },
+    { name: 'Help', page: '' },
 ]
+
 </script>
 
 <template>
@@ -13,9 +14,14 @@ const links = [
         <v-container class="fill-height d-flex align-center">
             <!-- <v-avatar class="me-10 ms-4" color="grey-darken-1" size="32"></v-avatar> -->
 
-            <v-btn v-for="link in links" :key="link" variant="text">
-                {{ link }}
-            </v-btn>
+            <template v-for="(link, i) in links" :key="i">
+                <router-link :to="{ name: link.page }">
+                    <v-btn variant="text">
+                        {{ link.name }}
+                    </v-btn>
+                </router-link>
+            </template>
+
 
             <v-spacer></v-spacer>
 
